@@ -11,7 +11,7 @@ steps:
   # Step 1: Terraform format check (optional)
   - id: 'terraform-fmt-check'
     name: 'hashicorp/terraform:1.7.5'
-    args: ['fmt', '-check', '-recursive', '-var-file=${_TF_ENV}.tfvars']
+    args: ['fmt', '-check', '-recursive']
     dir: 'gorillaclinic-terraform/environments/${_TF_ENV}'
 
   # Step 2: Terraform initialization
@@ -30,7 +30,7 @@ steps:
   # Step 3: Terraform validate
   - id: 'terraform-validate'
     name: 'hashicorp/terraform:1.7.5'
-    args: ['validate']
+    args: ['validate', '-var-file=${_TF_ENV}.tfvars']
     dir: 'gorillaclinic-terraform/environments/${_TF_ENV}'
     env:
       - 'TF_VAR_project_id=assessment-shabadh'
@@ -54,7 +54,7 @@ steps:
       - |
         if [[ "${_TRIGGER_APPLY}" == "true" ]]; then
           echo "Applying Terraform plan for ${_TF_ENV}..."
-          terraform apply -input=false tfplan
+          terraform apply -input=false -var-file=${_TF_ENV}.tfvars tfplan
         else
           echo "Skipping Terraform apply for ${_TF_ENV} (plan-only mode)."
         fi
