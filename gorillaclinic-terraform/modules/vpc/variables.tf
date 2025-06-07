@@ -32,9 +32,3 @@ variable "region_us" {
   type        = string
   description = "Google Project region in US"
 }
-
-
-variable "env_name" {
-  type        = string
-  description = "The environment name"
-}

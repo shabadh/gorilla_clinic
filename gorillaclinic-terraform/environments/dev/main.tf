@@ -7,5 +7,4 @@ module "vpc" {
   ip_cidr_range_us        = var.ip_cidr_range_us
   region_eu               = var.region_eu
   region_us               = var.region_us
-  env_name                = var.env_name
 }
