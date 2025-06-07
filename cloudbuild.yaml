@@ -47,7 +47,7 @@ steps:
 
   # Step 5: Conditional Terraform apply
   - id: 'terraform-apply'
-    name: 'bash'
+    name: 'hashicorp/terraform:1.7.5'
     entrypoint: 'bash'
     args:
       - '-c'
