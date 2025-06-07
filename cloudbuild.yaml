@@ -64,3 +64,4 @@ steps:
       - 'TF_VAR_project_id=assessment-shabadh'
       - 'TF_VAR_ar_repo_name=gorilla_clinic'
     waitFor: ['terraform-plan']
+    
