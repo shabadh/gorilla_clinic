@@ -1,6 +1,6 @@
 substitutions:
   _TF_ENV: 'dev'
-  _TF_STATE_BUCKET_NAME: 'gc-tf-state-assessment-shabadh'
+  _TF_STATE_BUCKET_NAME: 'gorillaclinic-dev-tf-state'
   _AR_REPO_NAME: 'gorilla_clinic'
   _TRIGGER_APPLY: 'true'
 
