@@ -11,7 +11,7 @@ steps:
   # Step 1: Terraform format check (optional)
   - id: 'terraform-fmt-check'
     name: 'hashicorp/terraform:1.7.5'
-    args: ['fmt', '-check', '-recursive']
+    args: ['fmt', '-check', '-recursive', '-var-file=${_TF_ENV}.tfvars']
     dir: 'gorillaclinic-terraform/environments/${_TF_ENV}'
 
   # Step 2: Terraform initialization
@@ -39,7 +39,7 @@ steps:
   # Step 4: Terraform plan
   - id: 'terraform-plan'
     name: 'hashicorp/terraform:1.7.5'
-    args: ['plan', '-out=tfplan', '-input=false']
+    args: ['plan', '-out=tfplan', '-input=false', '-var-file=${_TF_ENV}.tfvars']
     dir: 'gorillaclinic-terraform/environments/${_TF_ENV}'
     env:
       - 'TF_VAR_project_id=assessment-shabadh'
