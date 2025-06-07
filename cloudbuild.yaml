@@ -54,7 +54,7 @@ steps:
       - |
         if [[ "${_TRIGGER_APPLY}" == "true" ]]; then
           echo "Applying Terraform plan for ${_TF_ENV}..."
-          terraform apply -input=false -var-file=${_TF_ENV}.tfvars tfplan
+          terraform apply -input=false tfplan
         else
           echo "Skipping Terraform apply for ${_TF_ENV} (plan-only mode)."
         fi
