@@ -4,6 +4,9 @@ substitutions:
   _AR_REPO_NAME: 'gorilla_clinic'
   _TRIGGER_APPLY: 'true'
 
+options:
+  logging: CLOUD_LOGGING_ONLY
+
 steps:
   # Step 1: Terraform format check (optional)
   - id: 'terraform-fmt-check'
