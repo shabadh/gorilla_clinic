@@ -12,7 +12,7 @@ steps:
   - id: 'terraform-fmt-check'
     name: 'hashicorp/terraform:1.7.5'
     args: ['fmt', '-check', '-recursive']
-    dir: 'environments/${_TF_ENV}'
+    dir: 'gorillaclinic-terraform/environments/${_TF_ENV}'
 
   # Step 2: Terraform initialization
   - id: 'terraform-init'
@@ -22,7 +22,7 @@ steps:
       '-backend-config=bucket=${_TF_STATE_BUCKET_NAME}',
       '-backend-config=prefix=terraform/state/${_TF_ENV}'
     ]
-    dir: 'environments/${_TF_ENV}'
+    dir: 'gorillaclinic-terraform/environments/${_TF_ENV}'
     env:
       - 'TF_VAR_project_id=assessment-shabadh'
       - 'TF_VAR_ar_repo_name=gorilla_clinic'
@@ -31,7 +31,7 @@ steps:
   - id: 'terraform-validate'
     name: 'hashicorp/terraform:1.7.5'
     args: ['validate']
-    dir: 'environments/${_TF_ENV}'
+    dir: 'gorillaclinic-terraform/environments/${_TF_ENV}'
     env:
       - 'TF_VAR_project_id=assessment-shabadh'
       - 'TF_VAR_ar_repo_name=gorilla_clinic'
@@ -40,7 +40,7 @@ steps:
   - id: 'terraform-plan'
     name: 'hashicorp/terraform:1.7.5'
     args: ['plan', '-out=tfplan', '-input=false']
-    dir: 'environments/${_TF_ENV}'
+    dir: 'gorillaclinic-terraform/environments/${_TF_ENV}'
     env:
       - 'TF_VAR_project_id=assessment-shabadh'
       - 'TF_VAR_ar_repo_name=gorilla_clinic'
@@ -58,7 +58,7 @@ steps:
         else
           echo "Skipping Terraform apply for ${_TF_ENV} (plan-only mode)."
         fi
-    dir: 'environments/${_TF_ENV}'
+    dir: 'gorillaclinic-terraform/environments/${_TF_ENV}'
     env:
       - 'TF_VAR_project_id=assessment-shabadh'
       - 'TF_VAR_ar_repo_name=gorilla_clinic'
