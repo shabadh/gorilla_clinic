@@ -48,13 +48,14 @@ steps:
   # Step 5: Conditional Terraform apply
   - id: 'terraform-apply'
     name: 'hashicorp/terraform:1.7.5'
-    entrypoint: 'bash'
+    entrypoint: 'sh'
     args:
       - '-c'
       - |
-        if [[ "${_TRIGGER_APPLY}" == "true" ]]; then
+        echo "TRIGGER_APPLY is ${_TRIGGER_APPLY}"
+        if [ "${_TRIGGER_APPLY}" = "true" ]; then
           echo "Applying Terraform plan for ${_TF_ENV}..."
-          terraform apply -input=false tfplan
+          terraform apply -input=false tfplan || { echo "Terraform apply failed"; exit 1; }
         else
           echo "Skipping Terraform apply for ${_TF_ENV} (plan-only mode)."
         fi
