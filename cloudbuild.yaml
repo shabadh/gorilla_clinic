@@ -30,7 +30,7 @@ steps:
   # Step 3: Terraform validate
   - id: 'terraform-validate'
     name: 'hashicorp/terraform:1.7.5'
-    args: ['validate', '-var-file=${_TF_ENV}.tfvars']
+    args: ['validate']
     dir: 'gorillaclinic-terraform/environments/${_TF_ENV}'
     env:
       - 'TF_VAR_project_id=assessment-shabadh'
