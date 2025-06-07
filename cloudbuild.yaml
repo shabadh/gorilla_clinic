@@ -1,0 +1,62 @@
+substitutions:
+  _TF_ENV: 'dev'
+  _TF_STATE_BUCKET_NAME: 'gc-tf-state-assessment-shabadh'
+  _AR_REPO_NAME: 'gorilla_clinic'
+  _TRIGGER_APPLY: 'true'
+
+steps:
+  # Step 1: Terraform format check (optional)
+  - id: 'terraform-fmt-check'
+    name: 'hashicorp/terraform:1.7.5'
+    args: ['fmt', '-check', '-recursive']
+    dir: 'terraform/${_TF_ENV}'
+
+  # Step 2: Terraform initialization
+  - id: 'terraform-init'
+    name: 'hashicorp/terraform:1.7.5'
+    args: [
+      'init',
+      '-backend-config=bucket=${_TF_STATE_BUCKET_NAME}',
+      '-backend-config=prefix=terraform/state/${_TF_ENV}'
+    ]
+    dir: 'terraform/${_TF_ENV}'
+    env:
+      - 'TF_VAR_project_id=assessment-shabadh'
+      - 'TF_VAR_ar_repo_name=gorilla_clinic'
+
+  # Step 3: Terraform validate
+  - id: 'terraform-validate'
+    name: 'hashicorp/terraform:1.7.5'
+    args: ['validate']
+    dir: 'terraform/${_TF_ENV}'
+    env:
+      - 'TF_VAR_project_id=assessment-shabadh'
+      - 'TF_VAR_ar_repo_name=gorilla_clinic'
+
+  # Step 4: Terraform plan
+  - id: 'terraform-plan'
+    name: 'hashicorp/terraform:1.7.5'
+    args: ['plan', '-out=tfplan', '-input=false']
+    dir: 'terraform/${_TF_ENV}'
+    env:
+      - 'TF_VAR_project_id=assessment-shabadh'
+      - 'TF_VAR_ar_repo_name=gorilla_clinic'
+
+  # Step 5: Conditional Terraform apply
+  - id: 'terraform-apply'
+    name: 'bash'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        if [[ "${_TRIGGER_APPLY}" == "true" ]]; then
+          echo "Applying Terraform plan for ${_TF_ENV}..."
+          terraform apply -input=false tfplan
+        else
+          echo "Skipping Terraform apply for ${_TF_ENV} (plan-only mode)."
+        fi
+    dir: 'terraform/${_TF_ENV}'
+    env:
+      - 'TF_VAR_project_id=assessment-shabadh'
+      - 'TF_VAR_ar_repo_name=gorilla_clinic'
+    waitFor: ['terraform-plan']
