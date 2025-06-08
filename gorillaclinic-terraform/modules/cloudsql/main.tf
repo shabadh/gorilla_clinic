@@ -12,7 +12,7 @@ resource "google_sql_database_instance" "primary" {
     disk_type         = "PD_SSD"
 
     database_flags {
-      name  = "log_bin"
+      name  = "general_log"
       value = "on"
     }
   }
