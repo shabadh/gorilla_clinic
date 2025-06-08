@@ -4,8 +4,8 @@ project_id              = "assessment-shabadh"
 vpc_name                = "gc-vpc-dev"
 auto_create_subnetworks = false
 regions = [
-  europe-west4,   # Netherlands
-  europe-west2    # UK
+  europe-west4, # Netherlands
+  europe-west2  # UK
 ]
 subnets = [
   {
