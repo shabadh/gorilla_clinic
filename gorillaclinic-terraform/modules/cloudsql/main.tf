@@ -1,23 +1,29 @@
-# # Create Cloud SQL instance for PostgreSQL
-# resource "google_sql_database_instance" "primary" {
-#   name             = "petclinic-db"
-#   project          = var.project_id
-#   region           = "europe-west4"
-#   database_version = "POSTGRES_17"
-#   settings {
-#     tier = "db-custom-2-7680"
-#   }
-# }
+# Create Cloud SQL instance for PostgreSQL
+resource "google_sql_database_instance" "primary" {
+  name             = "petclinic-db-ha"
+  project          = var.project_id
+  region           = "europe-west4"
+  database_version = "MYSQL_8_0_41"
+  settings {
+    tier              = "db-n1-standard-2"
+    availability_type = "REGIONAL"
+    edition           = "ENTERPRISE_PLUS"
+    disk_size         = 100 #Gb
+    disk_type         = "PD_SSD"
+  }
+}
 
-# # Create database
-# resource "google_sql_database" "petclinic" {
-#   name     = "petclinic"
-#   instance = google_sql_database_instance.primary.name
-# }
+# Create database
+resource "google_sql_database" "petclinic" {
+  name     = "petclinic"
+  instance = google_sql_database_instance.primary.name
+  project  = var.project_id
+}
 
-# # Create application user
-# resource "google_sql_user" "app_user" {
-#   name     = "app_user"
-#   instance = google_sql_database_instance.primary.name
-#   password = "strong-password"
-# }
+# Create application user
+resource "google_sql_user" "app_user" {
+  name     = "petclinic"
+  instance = google_sql_database_instance.primary.name
+  password = "petclinic"
+  project  = var.project_id
+}

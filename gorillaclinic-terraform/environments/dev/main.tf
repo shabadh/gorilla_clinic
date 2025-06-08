@@ -10,3 +10,8 @@ module "gke_cluster" {
   network    = module.vpc.vpc_network_name
   subnets    = module.vpc.subnet_names
 }
+
+module "cloudsql" {
+  source     = "../../modules/cloudsql"
+  project_id = var.project_id
+}
