@@ -11,9 +11,9 @@ resource "google_sql_database_instance" "primary" {
     disk_size         = 100 #Gb
     disk_type         = "PD_SSD"
 
-    database_flags {
-      name  = "general_log"
-      value = "on"
+    backup_configuration {
+      enabled = true
+      binary_log_enabled = true
     }
   }
 }
