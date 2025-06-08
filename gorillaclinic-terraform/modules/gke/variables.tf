@@ -12,3 +12,13 @@ variable "cluster_names" {
   type    = list(string)
   default = ["petclinic-dev-eu", "petclinic-dev-uk"]
 }
+
+variable "network" {
+  type = string
+  description = "VPC network name"
+}
+
+variable "subnets" {
+  type = list(string)
+  description = "List of subnet names"
+}

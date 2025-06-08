@@ -3,8 +3,8 @@ resource "google_container_cluster" "primary" {
   count      = length(var.regions)
   name       = var.cluster_names[count.index]
   location   = var.regions[count.index]
-  network    = google_compute_network.vpc.name
-  subnetwork = google_compute_subnetwork.subnets[count.index].name
+  network    = var.network
+  subnetwork = var.subnets[count.index]
   project    = var.project_id
 
   ip_allocation_policy {
