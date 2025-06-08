@@ -10,6 +10,7 @@ resource "google_compute_subnetwork" "subnets" {
   ip_cidr_range = "10.${count.index}.0.0/16"
   region        = var.regions[count.index]
   network       = google_compute_network.vpc.id
+  project       = var.project_id
 
   secondary_ip_range {
     range_name    = "pods"
