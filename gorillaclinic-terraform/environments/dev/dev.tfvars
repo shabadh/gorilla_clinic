@@ -1,8 +1,7 @@
 # environments/dev/terraform.tfvars
 
-project_id              = "assessment-shabadh"
-vpc_name                = "gc-vpc-dev"
-auto_create_subnetworks = false
+project_id = "assessment-shabadh"
+vpc_name   = "gc-vpc-dev"
 subnets = [
   {
     name   = "gc-uk-dev"
