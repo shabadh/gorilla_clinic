@@ -1,3 +1,7 @@
+data "google_project" "live" {
+  project_id = var.project_id
+}
+
 # Create GKE clusters
 resource "google_container_cluster" "primary" {
   count      = length(var.regions)
@@ -13,7 +17,7 @@ resource "google_container_cluster" "primary" {
   }
 
   workload_identity_config {
-    workload_pool = "${data.google_project.current.number}.svc.id.goog"
+    workload_pool = "${data.google_project.live.number}.svc.id.goog"
   }
 
   vertical_pod_autoscaling {

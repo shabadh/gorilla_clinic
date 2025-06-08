@@ -1,6 +1,7 @@
 variable "project_id" {
   type        = string
   description = "Google Cloud Project ID"
+  default = "assessment-shabadh"
 }
 
 variable "regions" {
@@ -14,11 +15,11 @@ variable "cluster_names" {
 }
 
 variable "network" {
-  type = string
+  type        = string
   description = "VPC network name"
 }
 
 variable "subnets" {
-  type = list(string)
+  type        = list(string)
   description = "List of subnet names"
 }
