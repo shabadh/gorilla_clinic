@@ -3,13 +3,18 @@ resource "google_sql_database_instance" "primary" {
   name             = "petclinic-db-ha"
   project          = var.project_id
   region           = "europe-west4"
-  database_version = "MYSQL_8_0_41"
+  database_version = "MYSQL_8_0"
   settings {
     tier              = "db-n1-standard-2"
     availability_type = "REGIONAL"
     edition           = "ENTERPRISE"
     disk_size         = 100 #Gb
     disk_type         = "PD_SSD"
+
+    database_flags {
+      name  = "log_bin"
+      value = "on"
+    }
   }
 }
 
