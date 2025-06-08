@@ -58,3 +58,8 @@ resource "google_container_node_pool" "primary_nodes" {
     ]
   }
 }
+
+resource "google_compute_address" "static_ip" {
+  name   = "petclinic-ingress-ip"
+  region = "europe-west4"
+}
