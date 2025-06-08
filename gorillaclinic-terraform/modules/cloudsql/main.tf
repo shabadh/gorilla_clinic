@@ -7,7 +7,7 @@ resource "google_sql_database_instance" "primary" {
   settings {
     tier              = "db-n1-standard-2"
     availability_type = "REGIONAL"
-    edition           = "ENTERPRISE_PLUS"
+    edition           = "ENTERPRISE"
     disk_size         = 100 #Gb
     disk_type         = "PD_SSD"
   }
