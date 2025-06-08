@@ -1,8 +1,9 @@
 variable "project_id" {}
 variable "vpc_name" {}
-# variable "auto_create_subnetworks" {}
-# variable "ip_cidr_range_eu" {}
-# variable "ip_cidr_range_us" {}
-# variable "region_eu" {}
-# variable "region_us" {}
 variable "subnets" {}
+variable "cluster_name" {}
+variable "region" {}
+variable "pod_range" {}
+variable "service_range" {}
+# variable "region" {}
+
