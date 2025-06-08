@@ -12,7 +12,7 @@ resource "google_sql_database_instance" "primary" {
     disk_type         = "PD_SSD"
 
     backup_configuration {
-      enabled = true
+      enabled            = true
       binary_log_enabled = true
     }
   }
