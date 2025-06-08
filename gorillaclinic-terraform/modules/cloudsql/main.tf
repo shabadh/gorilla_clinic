@@ -5,7 +5,7 @@ resource "google_sql_database_instance" "primary" {
   region           = "europe-west4"
   database_version = "MYSQL_8_0"
   settings {
-    tier              = "db-perf-optimized-N-2"
+    tier              = "db-n2-standard-4"
     availability_type = "REGIONAL"
     edition           = "ENTERPRISE"
     disk_size         = 100 #Gb
