@@ -14,11 +14,11 @@ resource "google_compute_subnetwork" "subnets" {
 
   secondary_ip_range {
     range_name    = "pods"
-    ip_cidr_range = "172.16.${count.index}.0/20"
+    ip_cidr_range = "172.16.${count.index * 16}.0/20"
   }
 
   secondary_ip_range {
     range_name    = "services"
-    ip_cidr_range = "172.17.${count.index}.0/20"
+    ip_cidr_range = "172.17.${count.index * 16}.0/20"
   }
 }
