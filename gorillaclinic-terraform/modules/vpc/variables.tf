@@ -4,7 +4,8 @@ variable "project_id" {
 }
 
 variable "regions" {
-  type = list(string)
+  type    = list(string)
+  default = ["europe-west4", "europe-west2"]
 }
 
 variable "vpc_name" {
