@@ -9,11 +9,6 @@ variable "db_password" {
   default   = "petclinic" # Only for test/demo purpose
 }
 
-variable "vpc_self_link" {
-  description = "VPC self link for private IP connectivity"
-  type        = string
-}
-
 variable "region" {
   type    = string
   default = "europe-west4"

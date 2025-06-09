@@ -17,8 +17,3 @@ output "vpc_network_name" {
   description = "The name of the VPC network"
   value       = google_compute_network.vpc.name
 }
-
-output "vpc_self_link" {
-  description = "Self link of the created VPC netwrok"
-  value       = google_compute_network.vpc.self_link
-}

@@ -21,8 +21,7 @@ resource "google_sql_database_instance" "primary" {
       value = "500"
     }
     ip_configuration {
-      ipv4_enabled    = false
-      private_network = var.vpc_self_link
+      ipv4_enabled = false
     }
 
   }
@@ -48,8 +47,7 @@ resource "google_sql_database_instance" "replica" {
     activation_policy = "ALWAYS"
 
     ip_configuration {
-      ipv4_enabled    = false
-      private_network = var.vpc_self_link
+      ipv4_enabled = false
     }
   }
 }
