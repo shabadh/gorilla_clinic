@@ -21,3 +21,7 @@ output "vpc_network_name" {
 output "vpc_network_id" {
   value = google_compute_network.vpc.id
 }
+
+output "private_service_range" {
+  value = google_compute_global_address.private_service_range.name
+}

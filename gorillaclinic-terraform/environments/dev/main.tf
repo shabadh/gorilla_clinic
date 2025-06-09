@@ -15,4 +15,5 @@ module "cloudsql" {
   source          = "../../modules/cloudsql"
   project_id      = var.project_id
   private_network = module.vpc.vpc_network_id
+  depends_on      = [module.vpc]
 }
