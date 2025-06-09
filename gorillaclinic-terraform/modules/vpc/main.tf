@@ -22,3 +22,40 @@ resource "google_compute_subnetwork" "subnets" {
     ip_cidr_range = "172.17.${count.index * 16}.0/20"
   }
 }
+
+# resource "google_compute_global_address" "private_ip_address" {
+#   provider = google-beta
+
+#   name          = "private-ip-address"
+#   purpose       = "VPC_PEERING"
+#   address_type  = "INTERNAL"
+#   prefix_length = 16
+#   network       = google_compute_network.private_network.id
+# }
+
+# resource "google_service_networking_connection" "private_vpc_connection" {
+#   provider = google-beta
+
+#   network                 = google_compute_network.private_network.id
+#   service                 = "servicenetworking.googleapis.com"
+#   reserved_peering_ranges = [google_compute_global_address.private_ip_address.name]
+# }
+
+# resource "random_id" "db_name_suffix" {
+#   byte_length = 4
+# }
+
+resource "google_compute_global_address" "private_service_range" {
+  name          = "google-managed-services-${var.vpc_name}"
+  purpose       = "VPC_PEERING"
+  address_type  = "INTERNAL"
+  prefix_length = 16
+  network       = google_compute_network.vpc.id
+  project       = var.project_id
+}
+
+resource "google_service_networking_connection" "private_vpc_connection" {
+  network                 = google_compute_network.vpc.id
+  service                 = "servicenetworking.googleapis.com"
+  reserved_peering_ranges = [google_compute_global_address.private_service_range.name]
+}
