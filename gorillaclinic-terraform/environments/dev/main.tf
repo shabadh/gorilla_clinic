@@ -12,6 +12,7 @@ module "gke_cluster" {
 }
 
 module "cloudsql" {
-  source     = "../../modules/cloudsql"
-  project_id = var.project_id
+  source        = "../../modules/cloudsql"
+  project_id    = var.project_id
+  vpc_self_link = module.vpc.vpc_self_link
 }
