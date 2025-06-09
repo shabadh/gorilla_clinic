@@ -12,10 +12,9 @@ resource "google_sql_database_instance" "primary" {
     disk_type         = "PD_SSD"
 
     backup_configuration {
-      enabled                        = true
-      binary_log_enabled             = true
-      start_time                     = "03:00"
-      point_in_time_recovery_enabled = true
+      enabled            = true
+      binary_log_enabled = true
+      start_time         = "03:00"
     }
     database_flags {
       name  = "max_connections"
