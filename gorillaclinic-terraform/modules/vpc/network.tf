@@ -8,4 +8,5 @@ resource "google_compute_firewall" "allow_gateway" {
   }
   source_ranges = ["130.211.0.0/22", "35.191.0.0/16"] # Health check ranges
   target_tags   = ["gke-nodes"]
+  project       = var.project_id
 }
