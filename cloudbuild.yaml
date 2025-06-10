@@ -3,7 +3,6 @@ substitutions:
   _TF_STATE_BUCKET_NAME: 'gorillaclinic-dev-tf-state'
   _AR_REPO_NAME: 'gorilla_clinic'
   _TRIGGER_APPLY: 'true'
-  _TF_DIR: 'gorillaclinic-terraform/environments/dev'
 
 options:
   logging: CLOUD_LOGGING_ONLY
@@ -86,9 +85,3 @@ steps:
       - 'TF_VAR_project_id=assessment-shabadh'
       - 'TF_VAR_ar_repo_name=gorilla_clinic'
     waitFor: ['terraform-plan']
-    
-  # Step 7: Artifacts Upload
-artifacts:
-  objects:
-    location: 'gs://${_TF_STATE_BUCKET_NAME}/plans/${BUILD_ID}'
-    paths: ['${_TF_DIR/tfplan}']
