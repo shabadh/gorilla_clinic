@@ -1,7 +1,7 @@
 # Firewall rule for Gateway
 resource "google_compute_firewall" "allow_gateway" {
   name    = "allow-gateway-health-checks"
-  network = data.google_compute_network.vpc.name
+  network = google_compute_network.vpc.name
   allow {
     protocol = "tcp"
     ports    = ["80", "443"]
