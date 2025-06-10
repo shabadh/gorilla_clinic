@@ -3,6 +3,7 @@ substitutions:
   _TF_STATE_BUCKET_NAME: 'gorillaclinic-dev-tf-state'
   _AR_REPO_NAME: 'gorilla_clinic'
   _TRIGGER_APPLY: 'true'
+  _TF_DIR: 'gorillaclinic-terraform/environments/dev'
 
 options:
   logging: CLOUD_LOGGING_ONLY
@@ -14,7 +15,15 @@ steps:
     args: ['fmt', '-check', '-recursive']
     dir: 'gorillaclinic-terraform/environments/${_TF_ENV}'
 
-  # Step 2: Terraform initialization
+  # Step 2: Terraform Lint
+  - id: 'terraform-lint'
+    name: 'ghcr.io/terraform-linters/tflint'
+    entrypoint: 'sh'
+    args: ['-c', 'tflint']
+    dir: 'gorillaclinic-terraform/environments/${_TF_ENV}'
+
+
+  # Step 3: Terraform initialization
   - id: 'terraform-init'
     name: 'hashicorp/terraform:1.7.5'
     args: [
@@ -27,7 +36,7 @@ steps:
       - 'TF_VAR_project_id=assessment-shabadh'
       - 'TF_VAR_ar_repo_name=gorilla_clinic'
 
-  # Step 3: Terraform validate
+  # Step 4: Terraform validate
   - id: 'terraform-validate'
     name: 'hashicorp/terraform:1.7.5'
     args: ['validate']
@@ -36,7 +45,7 @@ steps:
       - 'TF_VAR_project_id=assessment-shabadh'
       - 'TF_VAR_ar_repo_name=gorilla_clinic'
 
-  # Step 4: Terraform plan
+  # Step 5: Terraform plan
   - id: 'terraform-plan'
     name: 'hashicorp/terraform:1.7.5'
     args: ['plan', '-out=tfplan', '-input=false', '-var-file=${_TF_ENV}.tfvars']
@@ -45,7 +54,7 @@ steps:
       - 'TF_VAR_project_id=assessment-shabadh'
       - 'TF_VAR_ar_repo_name=gorilla_clinic'
 
-  # Step 5: Conditional Terraform apply
+  # Step 6: Conditional Terraform apply
   - id: 'terraform-apply'
     name: 'hashicorp/terraform:1.7.5'
     entrypoint: 'sh'
@@ -65,3 +74,8 @@ steps:
       - 'TF_VAR_ar_repo_name=gorilla_clinic'
     waitFor: ['terraform-plan']
     
+  # Step 7: Artifacts Upload
+artifacts:
+  objects:
+    location: 'gs://${_TF_STATE_BUCKET_NAME}/plans/${BUILD_ID}'
+    paths: ['${_TF_DIR/tfplan}']
