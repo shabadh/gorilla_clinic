@@ -1,3 +1,7 @@
+data "google_project" "live" {
+  project_id = var.project_id
+}
+
 # Create GKE clusters
 resource "google_container_cluster" "primary" {
   count      = length(var.regions)
