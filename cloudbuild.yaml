@@ -54,7 +54,20 @@ steps:
       - 'TF_VAR_project_id=assessment-shabadh'
       - 'TF_VAR_ar_repo_name=gorilla_clinic'
 
-  # Step 6: Conditional Terraform apply
+  # Step 6: TF Plan Manual Approval
+  - id: 'manual-approval'
+    name: 'gcr.io/cloud-builders/gcloud'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        echo "Manual approval required to proceed with Terraform apply."
+        echo "Visit the Cloud Build UI to approve this step."
+    waitFor: ['terraform-plan']
+    timeout: 3600s # Approval timeout for an hour
+
+
+  # Step 7: Conditional Terraform apply
   - id: 'terraform-apply'
     name: 'hashicorp/terraform:1.7.5'
     entrypoint: 'sh'

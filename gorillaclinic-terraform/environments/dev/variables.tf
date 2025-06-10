@@ -1,2 +1,6 @@
-variable "vpc_name" {}
-variable "project_id" {}
+variable "vpc_name" {
+    type = string
+}
+variable "project_id" {
+    type = string
+}
